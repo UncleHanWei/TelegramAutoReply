@@ -15,10 +15,19 @@ username = lines[3].strip()
 # password = 'YOUR_PASSWORD'  # if you have two-step verification enabled
 
 # content of the automatic reply
-received = ['太慢', '告你', '等', '嫩', '不行', '哈', '問']
-message = ['快一點', '等著收傳票啦', '太慢了', '你才嫩', '你才不行', '笑屁', '不行']
-eatWhat = ['學餐', '麥當勞', '小鼎', '黃切仔麵', '葉師傅', '夜市', '肯德基', '披薩',
-    '八方', '華園', '悟饕', '永豆', '臺巴']
+receivedFile = open('received.txt', encoding='utf8')
+messageFile = open('message.txt', encoding='utf8')
+eatWhatFile = open('eatWhat.txt', encoding='utf8')
+received = receivedFile.readlines()
+message = messageFile.readlines()
+
+for i in range(len(received)) :
+    received[i] = received[i].strip()
+    message[i] = message[i].strip()
+
+eatWhat = eatWhatFile.readlines()
+for i in range(len(eatWhat)) :
+    eatWhat[i] = eatWhat[i].strip()
 
 def main():
     # Create the client and connect
@@ -31,13 +40,15 @@ def main():
             # print(time.asctime(), '-', event.message)  # optionally log time and message
             time.sleep(1)  # pause for 1 second to rate-limit automatic replies
             print('Receive message from:', event.message.from_id)
-            event.message.message = event.message.message.replace(' ', '')
+            event.message.message = ''.join(e for e in event.message.message if e.isalnum())
             print(event)
             for i in received :
                 if i in event.message.message :
                     event.reply(message[received.index(i)])
         # print(event)
-        if '吃啥' in event.message.message or '吃什麼' in event.message.message :
+        if '幫我' in event.message.message and ('吃什麼' in event.message.message 
+        or '吃啥' in event.message.message 
+        or '吃甚麼' in event.message.message) :
             print('有人問吃啥')
             event.reply(eatWhat[random.randint(0, len(eatWhat))])
 
