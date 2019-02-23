@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "AutoReply.py", line 7, in <module>
+    myFile = open('account.txt')
+FileNotFoundError: [Errno 2] No such file or directory: 'account.txt'
+Please enter the code you received: Traceback (most recent call last):
+  File "AutoReply.py", line 61, in <module>
+    main()
+  File "AutoReply.py", line 35, in main
+    client.start(phone)
+  File "/home/uncle/.local/lib/python3.6/site-packages/telethon/telegram_client.py", line 332, in start
+    me = self.sign_in(phone, code_callback())
+  File "/home/uncle/.local/lib/python3.6/site-packages/telethon/telegram_client.py", line 290, in code_callback
+    return input('Please enter the code you received: ')
+OSError: [Errno 9] Bad file descriptor
