@@ -38,7 +38,7 @@ def main():
     def _(event):
         if event.is_private :
             # print(time.asctime(), '-', event.message)  # optionally log time and message
-            time.sleep(1)  # pause for 1 second to rate-limit automatic replies
+            # time.sleep(1)  # pause for 1 second to rate-limit automatic replies
             print('Receive message from:', event.message.from_id)
             event.message.message = ''.join(e for e in event.message.message if e.isalnum())
             print(event)
